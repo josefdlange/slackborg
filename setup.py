@@ -5,10 +5,10 @@ except ImportError:
 
 try:
     import pypandoc
-    long_description = pypandoc.convert('README', 'rst')
+    long_description = pypandoc.convert('README.md', 'rst')
     long_description = long_description.replace('\r', '')
 except (IOError, ImportError):
-    long_description = open('README').read()
+    long_description = open('README.md').read()
 
 setup(
     author='Josef Lange',
