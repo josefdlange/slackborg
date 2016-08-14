@@ -52,7 +52,7 @@ class SlackBorg(object):
             print message
             if 'message' in message.get('type', '') and 'text' in message and 'user' in message and (self.is_dm(message['channel']) or self.at_bot(message['text'])):
                 conversation = self.conversation_manager.process_message(message)
-                if conversation.user == self.bot_id:
+                if conversation.user_id == self.bot_id:
                     print "Message from myself. Ignoring!"
                     conversation.close()
                 else:

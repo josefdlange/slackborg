@@ -24,19 +24,20 @@ class ConversationManager(object):
         return conversation
 
     def close_conversation(self, conversation):
-        key = '{}:{}'.format(conversation.user, conversation.channel)
+        key = '{}:{}'.format(conversation.user_id, conversation.channel_id)
         if key in self.conversations:
             del self.conversations[key]
 
 
 class Conversation(object):
     def __init__(self, manager, client, initial_message):
-        self.manager = manager
-        self.client = client
-        self.user = initial_message['user']
-        self.user_data = self.client.api_call('users.info', user=self.user)['user']
-        self.channel = initial_message['channel']
-        self.command = None
+        self._manager = manager
+        self._client = client
+        self._command = None
+        self.user_id = initial_message['user']
+        self.user_data = self._client.api_call('users.info', user=self.user_id)['user']
+        self.channel_id = initial_message['channel']
+        self.channel_data = self._client.api_call('channels.info', channel=self.channel_id)['channel']
         self.initial_message = initial_message['text']
         self.messages = []
         self.context = {}
@@ -52,14 +53,14 @@ class Conversation(object):
         self.messages.append(message['text'])
 
     def process_next(self):
-        self.command.process_conversation(self)
+        self._command.process_conversation(self)
 
     def say(self, text):
-        self.client.rtm_send_message(self.channel, text)
-        if not self.command.multi_step and self.command.auto_close:
+        self._client.rtm_send_message(self.channel_id, text)
+        if not self._command.multi_step:
             self.close()
 
     def close(self):
-        self.manager.close_conversation(self)
+        self._manager.close_conversation(self)
 
 # End
