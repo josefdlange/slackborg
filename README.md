@@ -35,7 +35,11 @@ The `Conversation` object is the sole parameter to your command handler. Convers
 
 # Installation
 
-Right now, I'd probably suggest spinning up a `virtualenv` and running `python setup.py develop` inside of it. Then, make yourself a script to run your bot, and define your commands, like so:
+Right now, I'd probably suggest spinning up a `virtualenv` and running `python setup.py develop` inside of it.
+
+# Usage
+
+Write yourself a script to declare your commands and run your bot, like so:
 
 ```
 import os
