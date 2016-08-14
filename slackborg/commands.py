@@ -14,7 +14,7 @@ class CommandManager(object):
                 m = command.matcher.search(query)
                 if m:
                     conversation._command = command
-                break
+                    break
             else:
                 print "No command matched."
                 conversation._command = self.default_cmd or DEFAULT

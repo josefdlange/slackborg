@@ -86,7 +86,7 @@ def do_sum(c):
             except:
                 c.say("That input wasn't a number. Try again!")
     else:
-        c.say("Just enter your operands, one by one, and then type done when you're done!")
+        c.say("Just enter your operands, one by one, and then type `done` when you're done!")
 
 def main():
     borg = SlackBorg(BOT_ID, BOT_TOKEN)

@@ -37,12 +37,17 @@ class Conversation(object):
         self._client = client
         self._command = None
         self.user_id = initial_message['user']
-        self.user_data = self._client.api_call('users.info', user=self.user_id)['user']
+        self.user_data = None 
         self.channel_id = initial_message['channel']
-        self.channel_data = self._client.api_call('channels.info', channel=self.channel_id)['channel']
+        self.channel_data = None
         self.initial_message = initial_message['text']
         self.messages = []
         self.context = {}
+
+    def load_data_if_necessary(self, force=False):
+        if force or self.user_data is None or self.channel_data is None:
+            self.user_data = self._client.api_call('users.info', user=self.user_id)['user']
+            self.channel_data = self._client.api_call('channels.info', channel=self.channel_id)['channel']
 
     @property
     def latest_message(self):

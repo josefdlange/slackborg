@@ -50,13 +50,17 @@ class SlackBorg(object):
     def handle_messages(self, messages):
         for message in messages:
             print message
-            if 'message' in message.get('type', '') and 'text' in message and 'user' in message and (self.does_trigger(message['text']) or self.is_dm(message['channel'])):
+            if 'message' in message.get('type', '') and 'text' in message and 'user' in message:
                 conversation = self.conversation_manager.process_message(message)
                 if conversation.user_id == self.bot_id:
                     print "Message from myself. Ignoring!"
                     conversation.close()
-                else:
+                elif conversation._command or ((self.does_trigger(message['text']) or self.is_dm(message['channel']))):
+                    conversation.load_data_if_necessary()
                     self.command_manager.handle_conversation(conversation)
+                else:
+                    print "I don't care about this conversation. Ignoring!"
+                    conversation.close()
 
     def is_dm(self, channel_id):
         channels = self.client.api_call('im.list').get('ims', [])
