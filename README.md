@@ -26,7 +26,12 @@ The `Conversation` object is the sole parameter to your command handler. Convers
 * channel_data: the Conversation's full Slack Channel Data (fetched when the Conversation is first created)
 * initial_message: the message that was responsible for the creation of this Conversation.
 * messages: the rest of the messages. *Does not include `initial_message`*.
+* latest_message: the most recent message.
 * context: a dictionary that you can put any data you want to persist in the conversation across messages. This is where the magic is for doing a multi-step command across a conversation.
+
+### `Conversation` methods:
+* say(message): send a message to the channel.
+* close(): close the conversation.
 
 # Installation
 
