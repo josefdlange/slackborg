@@ -1,6 +1,8 @@
 import time
 
 from slackclient import SlackClient as _SlackClient
+from conversations import ConversationManager
+from commands import CommandManager
 
 class SlackClient(_SlackClient):
     # I'm not sure if it's my local environment, but the Slack Client
@@ -24,6 +26,7 @@ class SlackClient(_SlackClient):
         self.server.__class__.connect_slack_websocket = patched_connect_slack_websocket
 
 
+
 class SlackBorg(object):
     def __init__(self, bot_id, bot_token, **kwargs):
         self.bot_id = bot_id
@@ -31,22 +34,35 @@ class SlackBorg(object):
         self.client = SlackClient(bot_token)
         self.read_delay = kwargs.get('read_delay', 1)
 
+        self.conversation_manager = ConversationManager(self.client)
+        self.command_manager = CommandManager()
+
+        self.triggers = kwargs.pop('triggers', []) + ["<@{}>:".format(self.bot_id)]
+
     def run(self):
         if self.client.rtm_connect():
             while True:
                 self.handle_messages(self.client.rtm_read())
                 time.sleep(self.read_delay)
         else:
-            print "Error connecting!"
-            print self.bot_id
-            print self.bot_token
-            print self.client.__dict__
-            print self.client.server
+            print "Error connecting to Slack RTM API!"
 
     def handle_messages(self, messages):
         for message in messages:
             print message
-            if 'text' in message:
-                print message['text']
+            if 'message' in message.get('type', '') and 'text' in message and 'user' in message and (self.is_dm(message['channel']) or self.at_bot(message['text'])):
+                conversation = self.conversation_manager.process_message(message)
+                if conversation.user == self.bot_id:
+                    print "Message from myself. Ignoring!"
+                    conversation.close()
+                else:
+                    self.command_manager.handle_conversation(conversation)
+
+    def is_dm(self, channel_id):
+        channels = self.client.api_call('im.list').get('ims', [])
+        return any([c['id'] == channel_id for c in channels])
+
+    def at_bot(self, message_text):
+        return any([t in message_text for t in self.triggers])
 
 # End
