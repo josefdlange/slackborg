@@ -20,18 +20,18 @@ SlackBorg has two main things you should care about, the `@command` decorator an
 The `Conversation` object is the sole parameter to your command handler. Conversations are unique to a given user in a given channel. When a message comes in, the conversation manager checks to see if a conversation exists for the sending user in the channel it is posted to. If it doesn't yet exist, a Conversation object is constructed and the command manager attempts to match a command to the Conversation. If it finds one, its handler is called on the conversation. If a conversation exists, it is updated with the latest message and its command's handler called on the updated Conversation.
 
 ### `Conversation` fields:
-* user_id: the sender's Slack User ID
-* user_data: the sender's full Slack User Data (fetched when the Conversation is first created)
-* channel_id: the Conversation's Slack Channel ID
-* channel_data: the Conversation's full Slack Channel Data (fetched when the Conversation is first created)
-* initial_message: the message that was responsible for the creation of this Conversation.
-* messages: the rest of the messages. *Does not include `initial_message`*.
-* latest_message: the most recent message.
-* context: a dictionary that you can put any data you want to persist in the conversation across messages. This is where the magic is for doing a multi-step command across a conversation.
+* `user_id`: the sender's Slack User ID
+* `user_data`: the sender's full Slack User Data (fetched when the Conversation is first created)
+* `channel_id`: the Conversation's Slack Channel ID
+* `channel_data`: the Conversation's full Slack Channel Data (fetched when the Conversation is first created)
+* `initial_message`: the message that was responsible for the creation of this Conversation.
+* `messages`: the rest of the messages. *Does not include `initial_message`*.
+* `latest_message`: the most recent message.
+* `context`: a dictionary that you can put any data you want to persist in the conversation across messages. This is where the magic is for doing a multi-step command across a conversation.
 
 ### `Conversation` methods:
-* say(message): send a message to the channel.
-* close(): close the conversation.
+* `say(message)`: send a message to the channel.
+* `close()`: close the conversation.
 
 # Installation
 
