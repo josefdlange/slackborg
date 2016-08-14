@@ -47,7 +47,8 @@ class Conversation(object):
     def load_data_if_necessary(self, force=False):
         if force or self.user_data is None or self.channel_data is None:
             self.user_data = self._client.api_call('users.info', user=self.user_id)['user']
-            self.channel_data = self._client.api_call('channels.info', channel=self.channel_id)['channel']
+            if self.channel_id.startswith('C'):
+                self.channel_data = self._client.api_call('channels.info', channel=self.channel_id)['channel']
 
     @property
     def latest_message(self):

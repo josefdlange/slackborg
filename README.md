@@ -23,7 +23,7 @@ The `Conversation` object is the sole parameter to your command handler. Convers
 * `user_id`: the sender's Slack User ID
 * `user_data`: the sender's full Slack User Data (fetched when the Conversation is first created)
 * `channel_id`: the Conversation's Slack Channel ID
-* `channel_data`: the Conversation's full Slack Channel Data (fetched when the Conversation is first created)
+* `channel_data`: the Conversation's full Slack Channel Data (fetched when the Conversation is first created -- **only set if it's a channel and not a DM**)
 * `initial_message`: the message that was responsible for the creation of this Conversation.
 * `messages`: the rest of the messages. *Does not include `initial_message`*.
 * `latest_message`: the most recent message.
