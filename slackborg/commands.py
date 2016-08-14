@@ -37,7 +37,7 @@ def command(match_string, flags=None, multi_step=False):
     return wrapper
 
 def default_command(func):
-    cmd = Command('.*', func, False, True, re.IGNORECASE)
+    cmd = Command('.*', func, False, re.IGNORECASE)
     print cmd
     CommandManager.default_cmd = cmd
     return func
@@ -45,6 +45,6 @@ def default_command(func):
 def no_response(conversation):
     pass
 
-DEFAULT = Command('.*', no_response, False, True, re.IGNORECASE)
+DEFAULT = Command('.*', no_response, False, re.IGNORECASE)
 
 # End
