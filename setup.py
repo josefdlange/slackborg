@@ -3,7 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-long_description = open('README.rest').read()
+long_description = open('README.rst').read()
 
 setup(
     author='Josef Lange',
