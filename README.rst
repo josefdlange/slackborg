@@ -140,4 +140,8 @@ so:
 
     # End
 
+Thanks
+~~~~~~
+ Some of the patterns used in this framework borrow ideologies from _lins05/slackbot, so I thank the existing developers of that library for their prior work. Perhaps we can bring these two libraries together, eventually! Or keep them separate :D
 
+.. _lins05/slackbot: https://github.com/lins05/slackbot
