@@ -3,12 +3,7 @@ try:
 except ImportError:
     from distutils.core import setup
 
-try:
-    import pypandoc
-    long_description = pypandoc.convert('README.md', 'rst')
-    long_description = long_description.replace('\r', '')
-except (IOError, ImportError):
-    long_description = open('README.md').read()
+long_description = open('README.rest').read()
 
 setup(
     author='Josef Lange',
