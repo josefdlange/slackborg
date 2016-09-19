@@ -10,7 +10,7 @@ setup(
     author_email='josef.d.lange@me.com',
     name='slackborg',
     description='A simple semi-conversational, multi-step workflow slack bot framework.',
-    version='0.0.1',
+    version='0.0.2',
     packages=['slackborg',],
     license='MIT',
     long_description=long_description,
